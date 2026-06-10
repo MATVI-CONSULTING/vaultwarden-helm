@@ -75,3 +75,12 @@ data:
   PUSH_RELAY_URI: {{ .Values.pushNotifications.relayUri | quote }}
   {{- if .Values.pushNotifications.identityUri }}
   PUSH_IDENTITY_URI: {{ .Values.pushNotifications.identityUri | quote }}
+  ICON_SERVICE: {{ .Values.icons.service | quote }}
+  ICON_REDIRECT_CODE: {{ .Values.icons.redirectCode | quote }}
+  DISABLE_ICON_DOWNLOAD: {{ .Values.icons.disableLocalNetworkAccess | quote }}
+  ADMIN_RATELIMIT_SECONDS: {{ .Values.admin.rateLimitSeconds | quote }}
+  ADMIN_RATELIMIT_MAX_BURST: {{ .Values.admin.rateLimitMaxBurst | quote }}
+  LOG_LEVEL: {{ .Values.logging.level | quote }}
+  EXTENDED_LOGGING: {{ .Values.logging.timestamps | quote }}
+  {{- if .Values.logging.file }}
+  LOG_FILE: {{ .Values.logging.file | quote }}

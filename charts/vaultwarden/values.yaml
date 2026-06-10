@@ -223,3 +223,35 @@ database:
   # Si renseigné, remplace la construction automatique de l'URL
   # Exemple : "postgresql://user:password@host:5432/vaultwarden"
   uri: ""
+
+admin:
+  # Délai de rate limiting en secondes
+  rateLimitSeconds: "300"
+  # Nombre maximum de tentatives dans la fenêtre de rate limiting
+  rateLimitMaxBurst: "3"
+
+# Configuration du logging
+
+hibp:
+  # Clé API HIBP (sensible) — obtenir sur haveibeenpwned.com/API/Key
+  apiKey: ""
+
+# Service d'icônes (favicon des sites web dans les entrées)
+
+icons:
+  # Service à utiliser : internal | bitwarden | duckduckgo | google | <URL personnalisée>
+  service: "internal"
+  # Code de redirection HTTP (301 | 302)
+  redirectCode: "302"
+  # Désactiver le téléchargement des icônes depuis des IP locales/privées
+  disableLocalNetworkAccess: "false"
+
+# Configuration du panneau d'administration
+
+logging:
+  # Niveau de log : trace | debug | info | warn | error
+  level: "info"
+  # Chemin vers un fichier de log (laisser vide pour écrire uniquement sur stdout)
+  file: ""
+  # Activer le logging étendu avec timestamps
+  timestamps: "false"
