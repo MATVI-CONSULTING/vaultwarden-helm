@@ -85,3 +85,14 @@ serviceAccount:
   create: false
   annotations: {}
   name: ""
+
+# Quotas de stockage (laisser vide = illimité)
+storage:
+  # Limite de stockage des pièces jointes pour les organisations (en KB)
+  orgAttachmentLimit: ""
+  # Limite de stockage des pièces jointes par utilisateur (en KB)
+  userAttachmentLimit: ""
+  # Limite de stockage pour les Sends par utilisateur (en KB)
+  sendStorageLimit: ""
+  # Nombre de jours avant suppression automatique de la corbeille (0 = désactivé)
+  trashAutoDeletion: ""
