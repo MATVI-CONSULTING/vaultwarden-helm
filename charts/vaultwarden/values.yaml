@@ -35,6 +35,14 @@ smtp:
   # 587 (starttls) | 465 (force_tls)
   port: "587"
   username: ""
+  # Plain | Login | Xoauth2
+  authMechanism: "Plain"
+  # Accepter les certificats avec un hostname invalide (utile pour test)
+  acceptInvalidHostnames: "false"
+  # Accepter les certificats SSL invalides (utile pour test)
+  acceptInvalidCerts: "false"
+  # Activer le debugging SMTP
+  debug: "false"
 
 # Secrets (sensibles — ne pas committer les valeurs réelles)
 secrets:
