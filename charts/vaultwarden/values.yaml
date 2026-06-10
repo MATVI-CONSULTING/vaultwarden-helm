@@ -65,6 +65,10 @@ ingress:
   tls:
     enabled: false
     secretName: "vaultwarden-tls"
+  # Support WebSocket pour les notifications temps réel (/notifications/hub)
+  # Nécessite un ingress controller Nginx avec les annotations appropriées.
+  websocket:
+    enabled: false
 
 resources:
   requests:

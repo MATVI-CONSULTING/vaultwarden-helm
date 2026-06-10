@@ -130,6 +130,35 @@ config:
   orgEventsEnabled: "true"
 ```
 
+## WebSocket Support
+
+Vaultwarden uses WebSockets at `/notifications/hub` for real-time synchronization across clients. When using Nginx Ingress, enable WebSocket support to ensure live updates work correctly.
+
+| Parameter | Description | Default |
+| --- | --- | --- |
+| `ingress.websocket.enabled` | Enable WebSocket path and Nginx timeout annotations | `false` |
+
+### Nginx Ingress example with WebSocket
+
+```yaml
+ingress:
+  enabled: true
+  className: "nginx"
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+  host: "vaultwarden.example.com"
+  tls:
+    enabled: true
+    secretName: "vaultwarden-tls"
+  websocket:
+    enabled: true
+```
+
+When `websocket.enabled: true`, the following are automatically added:
+- An explicit path rule for `/notifications/hub`
+- `nginx.ingress.kubernetes.io/proxy-read-timeout: "3600"`
+- `nginx.ingress.kubernetes.io/proxy-send-timeout: "3600"`
+
 ## Sources
 
 - Official project: [github.com/dani-garcia/vaultwarden](https://github.com/dani-garcia/vaultwarden)
