@@ -1,0 +1,14 @@
+Vaultwarden has been deployed!
+
+Access the application at: {{ .Values.config.domain }}
+Admin panel: {{ .Values.config.domain }}/admin
+
+{{- if .Values.ingress.enabled }}
+Ingress host: {{ .Values.ingress.host }}
+{{- end }}
+
+To check the deployment status:
+  kubectl get pods -l {{ include "chart.selectorLabels" . | replace "\n" "," }}
+
+To view logs:
+  kubectl logs -l app.kubernetes.io/name={{ include "chart.name" . }} -f

@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "chart.fullname" . }}-vaultwarden
+  labels:
+    {{- include "chart.labels" . | nindent 4 }}
+data:
+  DOMAIN: {{ .Values.config.domain | quote }}
+  SIGNUPS_ALLOWED: {{ .Values.config.signupsAllowed | quote }}
+  SHOW_PASSWORD_HINT: {{ .Values.config.showPasswordHint | quote }}
+  SMTP_HOST: {{ .Values.smtp.host | quote }}
+  SMTP_FROM: {{ .Values.smtp.from | quote }}
+  SMTP_FROM_NAME: {{ .Values.smtp.fromName | quote }}
+  SMTP_SECURITY: {{ .Values.smtp.security | quote }}
+  SMTP_PORT: {{ .Values.smtp.port | quote }}
+  SMTP_USERNAME: {{ .Values.smtp.username | quote }}

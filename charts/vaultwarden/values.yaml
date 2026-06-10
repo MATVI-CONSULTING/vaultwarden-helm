@@ -1,0 +1,75 @@
+# Default values for vaultwarden.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+image:
+  repository: vaultwarden/server
+  tag: "1.36.0"
+  pullPolicy: IfNotPresent
+
+replicaCount: 1
+
+# Configuration générale de Vaultwarden (variables non-sensibles)
+config:
+  # URL publique de l'instance — doit correspondre à l'hôte Ingress
+  domain: "https://vaultwarden.example.com"
+  # Désactiver après création du premier compte admin
+  signupsAllowed: "false"
+  showPasswordHint: "false"
+
+# Configuration SMTP (variables non-sensibles)
+smtp:
+  host: ""
+  from: ""
+  fromName: "Vaultwarden"
+  # starttls | force_tls | off
+  security: "starttls"
+  # 587 (starttls) | 465 (force_tls)
+  port: "587"
+  username: ""
+
+# Secrets (sensibles — ne pas committer les valeurs réelles)
+secrets:
+  # Hash Argon2 du mot de passe admin
+  # Générer : docker run --rm -it vaultwarden/server /vaultwarden hash --preset owasp
+  adminToken: ""
+  smtpPassword: ""
+
+# Stockage persistant des données Vaultwarden (/data)
+persistence:
+  enabled: true
+  size: 1Gi
+  # Laisser vide pour utiliser la StorageClass par défaut du cluster
+  storageClass: ""
+  accessMode: ReadWriteOnce
+
+service:
+  type: ClusterIP
+  port: 80
+
+ingress:
+  enabled: true
+  className: ""
+  annotations: {}
+    # kubernetes.io/ingress.class: nginx
+    # cert-manager.io/cluster-issuer: letsencrypt-prod
+  host: "vaultwarden.example.com"
+  tls:
+    enabled: false
+    secretName: "vaultwarden-tls"
+
+resources:
+  requests:
+    cpu: 50m
+    memory: 64Mi
+  limits:
+    cpu: 200m
+    memory: 256Mi
+
+nameOverride: ""
+fullnameOverride: ""
+
+serviceAccount:
+  create: false
+  annotations: {}
+  name: ""
