@@ -352,6 +352,36 @@ config:
   signupsVerify: "true"
   invitationOrgName: "MyCompany Vault"
 ```
+
+## SSO / OpenID Connect
+
+Vaultwarden supports Single Sign-On via OpenID Connect. This requires a compatible identity provider (Keycloak, Authentik, Azure AD, Google, etc.).
+
+| Parameter | Description | Default |
+| --- | --- | --- |
+| `sso.enabled` | Enable SSO authentication | `false` |
+| `sso.onlySSO` | Disable password login — enforce SSO only | `false` |
+| `sso.authority` | OpenID Connect discovery URL | `""` |
+| `sso.clientId` | OIDC client ID | `""` |
+| `sso.clientSecret` | OIDC client secret (stored in Secret) | `""` |
+| `sso.pkce` | Enable PKCE (Proof Key for Code Exchange) | `true` |
+| `sso.scopes` | OIDC scopes to request | `email profile` |
+| `sso.masterPasswordPolicy` | Master password policy JSON | `""` |
+
+### Keycloak example
+
+```yaml
+sso:
+  enabled: true
+  onlySSO: false
+  authority: "https://keycloak.example.com/realms/myrealm"
+  clientId: "vaultwarden"
+  clientSecret: "your-client-secret"
+  pkce: true
+  scopes: "email profile"
+```
+
+> **Note:** SSO in Vaultwarden requires the SSO patch (available in the official `vaultwarden/server` image). Consult the [Vaultwarden SSO wiki](https://github.com/dani-garcia/vaultwarden/wiki) for setup details.
 ## Sources
 
 - Official project: [github.com/dani-garcia/vaultwarden](https://github.com/dani-garcia/vaultwarden)
