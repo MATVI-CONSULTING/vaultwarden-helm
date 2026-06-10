@@ -33,6 +33,8 @@ Copy `values.yaml` and adjust the values for your target environment.
 | `smtp.security` | SMTP security (`starttls` / `force_tls` / `off`) | `starttls` |
 | `persistence.enabled` | Enable persistent storage | `true` |
 | `persistence.size` | PVC size | `1Gi` |
+| `persistence.storageClass` | StorageClass name (empty = cluster default) | `""` |
+| `persistence.accessMode` | PVC access mode | `ReadWriteOnce` |
 | `ingress.enabled` | Enable Ingress | `true` |
 | `ingress.host` | Ingress hostname | `vaultwarden.example.com` |
 | `ingress.tls.enabled` | Enable TLS | `false` |
@@ -500,6 +502,70 @@ logging:
   file: "/data/vaultwarden.log"
   timestamps: "true"
 ```
+
+## Persistent Storage
+
+Vaultwarden stores all data (SQLite database, attachments, config) under `/data`. By default, a `PersistentVolumeClaim` of 1 Gi is created using the cluster's default StorageClass.
+
+| Parameter | Description | Default |
+| --- | --- | --- |
+| `persistence.enabled` | Create a PVC for `/data` | `true` |
+| `persistence.size` | Volume size | `1Gi` |
+| `persistence.storageClass` | StorageClass name. Empty string = cluster default | `""` |
+| `persistence.accessMode` | PVC access mode | `ReadWriteOnce` |
+
+> **Always set `storageClass` explicitly** in production to avoid relying on cluster defaults, which can change or conflict (see warning below).
+
+### StorageClass options by provider
+
+| Provider | StorageClass | Provisioner | Reclaim policy | Notes |
+| --- | --- | --- | --- | --- |
+| **Infomaniak IKS** | `csi-cinder-sc-retain` | `cinder.csi.openstack.org` | Retain | **Recommended for prod** — volume kept on PVC deletion |
+| **Infomaniak IKS** | `csi-cinder-sc-delete` | `cinder.csi.openstack.org` | Delete | Volume deleted with PVC |
+| **AWS EKS** | `gp3` | `ebs.csi.aws.com` | Delete | Requires EBS CSI driver add-on + IRSA |
+| **GKE** | `standard` | `pd.csi.storage.gke.io` | Delete | Google Persistent Disk |
+| **AKS** | `managed-csi` | `disk.csi.azure.com` | Delete | Azure Managed Disk |
+| **Generic / on-prem** | `local-path` | `rancher.io/local-path` | Delete | Local storage (Rancher / k3s) |
+
+Run `kubectl get storageclass` on your cluster to list available classes.
+
+### Infomaniak IKS example
+
+```yaml
+persistence:
+  enabled: true
+  size: 5Gi
+  storageClass: "csi-cinder-sc-retain"
+  accessMode: ReadWriteOnce
+```
+
+> **`csi-cinder-sc-retain` is strongly recommended** on Infomaniak: the underlying Cinder volume is preserved if the PVC is accidentally deleted, preventing data loss.
+
+### Disabling persistence (ephemeral / testing)
+
+```yaml
+persistence:
+  enabled: false
+```
+
+The pod uses an `emptyDir` volume — data is lost on restart. Only suitable for testing.
+
+### Troubleshooting: PVC stuck in Pending
+
+If the PVC remains `Pending`, inspect it:
+
+```bash
+kubectl describe pvc vaultwarden-data -n <namespace>
+```
+
+Common causes:
+
+| Symptom | Cause | Fix |
+| --- | --- | --- |
+| `Waiting for a volume to be created by ebs.csi.aws.com` on a non-AWS cluster | A `gp3`/AWS StorageClass is set as cluster default | Set `persistence.storageClass` to the correct class for your provider |
+| Two StorageClasses marked as default | Conflicting defaults (Kubernetes picks unpredictably) | Remove the `is-default-class` annotation from the wrong one: `kubectl patch storageclass gp3 -p '{"metadata":{"annotations":{"storageclass.kubernetes.io/is-default-class":"false"}}}'` |
+| `no persistent volumes available` | No provisioner running | Check `kubectl get pods -A \| grep csi` |
+
 ## Sources
 
 - Official project: [github.com/dani-garcia/vaultwarden](https://github.com/dani-garcia/vaultwarden)
