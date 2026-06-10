@@ -40,3 +40,11 @@ data:
   EVENT_CLEANUP_SCHEDULE: {{ .Values.jobs.eventCleanup | quote }}
   {{- if .Values.jobs.eventRetentionDays }}
   EVENTS_DAYS_RETAIN: {{ .Values.jobs.eventRetentionDays | quote }}
+  {{- if .Values.yubikey.clientId }}
+  YUBICO_CLIENT_ID: {{ .Values.yubikey.clientId | quote }}
+  {{- if .Values.yubikey.server }}
+  YUBICO_SERVER: {{ .Values.yubikey.server | quote }}
+  {{- if .Values.duo.iKey }}
+  DUO_IKEY: {{ .Values.duo.iKey | quote }}
+  {{- if .Values.duo.hostname }}
+  DUO_HOST: {{ .Values.duo.hostname | quote }}
