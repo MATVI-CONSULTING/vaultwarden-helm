@@ -96,3 +96,13 @@ storage:
   sendStorageLimit: ""
   # Nombre de jours avant suppression automatique de la corbeille (0 = désactivé)
   trashAutoDeletion: ""
+
+jobs:
+  # Rappel pour les accès d'urgence en attente (défaut Vaultwarden : toutes les heures)
+  emergencyNotificationReminder: ""
+  # Timeout des demandes d'accès d'urgence expirées (défaut : toutes les heures)
+  emergencyAccessRequestTimeout: ""
+  # Nettoyage des événements de l'organisation (défaut : tous les jours à 10h)
+  eventCleanup: ""
+  # Rétention des événements en jours (laisser vide = illimité)
+  eventRetentionDays: ""

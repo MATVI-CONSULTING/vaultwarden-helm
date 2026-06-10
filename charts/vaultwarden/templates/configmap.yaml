@@ -32,3 +32,11 @@ data:
   {{- if .Values.storage.trashAutoDeletion }}
   TRASH_AUTO_DELETE_DAYS: {{ .Values.storage.trashAutoDeletion | quote }}
   {{- end }}
+  {{- if .Values.jobs.emergencyNotificationReminder }}
+  EMERGENCY_NOTIFICATION_REMINDER_SCHEDULE: {{ .Values.jobs.emergencyNotificationReminder | quote }}
+  {{- if .Values.jobs.emergencyAccessRequestTimeout }}
+  EMERGENCY_REQUEST_TIMEOUT_SCHEDULE: {{ .Values.jobs.emergencyAccessRequestTimeout | quote }}
+  {{- if .Values.jobs.eventCleanup }}
+  EVENT_CLEANUP_SCHEDULE: {{ .Values.jobs.eventCleanup | quote }}
+  {{- if .Values.jobs.eventRetentionDays }}
+  EVENTS_DAYS_RETAIN: {{ .Values.jobs.eventRetentionDays | quote }}
