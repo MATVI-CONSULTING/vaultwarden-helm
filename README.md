@@ -409,6 +409,42 @@ pushNotifications:
 ```
 
 The `installationId` and `installationKey` are stored in the Kubernetes Secret.
+
+## Database Configuration
+
+By default, Vaultwarden uses SQLite stored at `/data/db.sqlite3`. For production deployments with higher availability requirements, PostgreSQL or MySQL/MariaDB are recommended.
+
+| Parameter | Description | Default |
+| --- | --- | --- |
+| `database.type` | Database engine (`sqlite` \| `mysql` \| `postgresql`) | `sqlite` |
+| `database.host` | Database server hostname | `""` |
+| `database.port` | Database server port | `""` |
+| `database.name` | Database name | `vaultwarden` |
+| `database.username` | Database username | `""` |
+| `database.password` | Database password | `""` |
+| `database.uri` | Full connection URI (overrides individual fields) | `""` |
+
+### PostgreSQL example
+
+```yaml
+database:
+  type: postgresql
+  host: postgres.default.svc.cluster.local
+  port: "5432"
+  name: vaultwarden
+  username: vaultwarden
+  password: "strongpassword"
+```
+
+The `DATABASE_URL` is constructed as `postgresql://username:password@host:port/name` and stored in the Kubernetes Secret.
+
+### Using an existing database URI
+
+```yaml
+database:
+  type: postgresql
+  uri: "postgresql://user:pass@host:5432/vaultwarden?sslmode=require"
+```
 ## Sources
 
 - Official project: [github.com/dani-garcia/vaultwarden](https://github.com/dani-garcia/vaultwarden)
