@@ -69,3 +69,9 @@ data:
   SSO_SCOPES: {{ .Values.sso.scopes | quote }}
   {{- if .Values.sso.masterPasswordPolicy }}
   SSO_MASTER_PASSWORD_POLICY: {{ .Values.sso.masterPasswordPolicy | quote }}
+  {{- if .Values.pushNotifications.enabled }}
+  PUSH_ENABLED: "true"
+  {{- if .Values.pushNotifications.relayUri }}
+  PUSH_RELAY_URI: {{ .Values.pushNotifications.relayUri | quote }}
+  {{- if .Values.pushNotifications.identityUri }}
+  PUSH_IDENTITY_URI: {{ .Values.pushNotifications.identityUri | quote }}
