@@ -329,6 +329,29 @@ startupProbe:
 imagePullSecrets:
   - name: my-registry-secret
 ```
+
+## User Registration Controls
+
+Fine-grained control over user registration, email verification, and invitations.
+
+| Parameter | Description | Default |
+| --- | --- | --- |
+| `config.signupDomains` | Restrict registrations to these email domains (comma-separated) | `""` (all allowed) |
+| `config.signupsVerify` | Require email verification upon registration | `false` |
+| `config.emailChangeAllowed` | Allow users to change their email address | `true` |
+| `config.invitationOrgName` | Organization name shown in invitation emails | `Vaultwarden` |
+| `config.invitationExpiration` | Invitation link validity in hours | `120` |
+| `config.requireDeviceEmail` | Require users to have an email address on their device | `false` |
+
+### Restricting to company domains
+
+```yaml
+config:
+  signupsAllowed: "true"
+  signupDomains: "mycompany.com,subsidiary.com"
+  signupsVerify: "true"
+  invitationOrgName: "MyCompany Vault"
+```
 ## Sources
 
 - Official project: [github.com/dani-garcia/vaultwarden](https://github.com/dani-garcia/vaultwarden)

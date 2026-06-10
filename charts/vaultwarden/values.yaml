@@ -24,6 +24,19 @@ config:
   orgCreationUsers: "all"
   orgGroupsEnabled: "false"
   orgEventsEnabled: "false"
+  # Restreindre les inscriptions à des domaines email spécifiques (séparés par des virgules)
+  # Exemple : "example.com,mycompany.org"
+  signupDomains: ""
+  # Exiger une vérification de l'adresse email lors de l'inscription
+  signupsVerify: "false"
+  # Autoriser les utilisateurs à changer leur adresse email
+  emailChangeAllowed: "true"
+  # Nom de l'organisation dans les emails d'invitation
+  invitationOrgName: "Vaultwarden"
+  # Durée de validité des invitations en heures
+  invitationExpiration: "120"
+  # Exiger un email associé à chaque appareil
+  requireDeviceEmail: "false"
 
 # Configuration SMTP (variables non-sensibles)
 smtp:

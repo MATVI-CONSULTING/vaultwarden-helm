@@ -14,6 +14,14 @@ data:
   ORG_CREATION_USERS: {{ .Values.config.orgCreationUsers | quote }}
   ORG_GROUPS_ENABLED: {{ .Values.config.orgGroupsEnabled | quote }}
   ORG_EVENTS_ENABLED: {{ .Values.config.orgEventsEnabled | quote }}
+  {{- if .Values.config.signupDomains }}
+  SIGNUPS_DOMAINS_WHITELIST: {{ .Values.config.signupDomains | quote }}
+  {{- end }}
+  SIGNUPS_VERIFY: {{ .Values.config.signupsVerify | quote }}
+  EMAIL_CHANGE_ALLOWED: {{ .Values.config.emailChangeAllowed | quote }}
+  INVITATION_ORG_NAME: {{ .Values.config.invitationOrgName | quote }}
+  INVITATION_EXPIRATION_HOURS: {{ .Values.config.invitationExpiration | quote }}
+  REQUIRE_DEVICE_EMAIL: {{ .Values.config.requireDeviceEmail | quote }}
   SMTP_HOST: {{ .Values.smtp.host | quote }}
   SMTP_FROM: {{ .Values.smtp.from | quote }}
   SMTP_FROM_NAME: {{ .Values.smtp.fromName | quote }}
