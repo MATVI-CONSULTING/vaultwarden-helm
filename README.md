@@ -179,6 +179,27 @@ storage:
   sendStorageLimit: "524288"      # 512 MB in KB
   trashAutoDeletion: "30"
 ```
+
+## Scheduled Tasks
+
+Configure the cron schedules for Vaultwarden's internal maintenance jobs. Leave empty to use Vaultwarden's built-in defaults.
+
+| Parameter | Description | Default (Vaultwarden) |
+| --- | --- | --- |
+| `jobs.emergencyNotificationReminder` | Cron schedule for emergency access reminders | Every hour |
+| `jobs.emergencyAccessRequestTimeout` | Cron schedule for timing out emergency access requests | Every hour |
+| `jobs.eventCleanup` | Cron schedule for organization event log cleanup | Daily at 10:00 |
+| `jobs.eventRetentionDays` | Days to retain organization events (empty = unlimited) | `""` |
+
+### Example: custom schedules
+
+```yaml
+jobs:
+  emergencyNotificationReminder: "0 */6 * * *"  # every 6 hours
+  emergencyAccessRequestTimeout: "0 */6 * * *"  # every 6 hours
+  eventCleanup: "0 2 * * 0"                     # weekly on Sunday at 2am
+  eventRetentionDays: "90"
+```
 ## Sources
 
 - Official project: [github.com/dani-garcia/vaultwarden](https://github.com/dani-garcia/vaultwarden)
