@@ -5,10 +5,14 @@ metadata:
   name: {{ include "chart.fullname" . }}
   labels:
     {{- include "chart.labels" . | nindent 4 }}
-  {{- with .Values.ingress.annotations }}
   annotations:
+    {{- with .Values.ingress.annotations }}
     {{- toYaml . | nindent 4 }}
-  {{- end }}
+    {{- end }}
+    {{- if .Values.ingress.websocket.enabled }}
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "3600"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "3600"
+    {{- end }}
 spec:
   {{- if .Values.ingress.className }}
   ingressClassName: {{ .Values.ingress.className }}
@@ -30,4 +34,13 @@ spec:
                 name: {{ include "chart.fullname" . }}
                 port:
                   number: {{ .Values.service.port }}
+          {{- if .Values.ingress.websocket.enabled }}
+          - path: /notifications/hub
+            pathType: Prefix
+            backend:
+              service:
+                name: {{ include "chart.fullname" . }}
+                port:
+                  number: {{ .Values.service.port }}
+          {{- end }}
 {{- end }}
