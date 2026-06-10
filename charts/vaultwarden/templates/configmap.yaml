@@ -60,3 +60,12 @@ data:
   SMTP_ACCEPT_INVALID_HOSTNAMES: {{ .Values.smtp.acceptInvalidHostnames | quote }}
   SMTP_ACCEPT_INVALID_CERTS: {{ .Values.smtp.acceptInvalidCerts | quote }}
   SMTP_DEBUG: {{ .Values.smtp.debug | quote }}
+  {{- if .Values.sso.enabled }}
+  SSO_ENABLED: {{ .Values.sso.enabled | toString | quote }}
+  SSO_ONLY: {{ .Values.sso.onlySSO | toString | quote }}
+  SSO_AUTHORITY: {{ .Values.sso.authority | quote }}
+  SSO_CLIENT_ID: {{ .Values.sso.clientId | quote }}
+  SSO_PKCE: {{ .Values.sso.pkce | toString | quote }}
+  SSO_SCOPES: {{ .Values.sso.scopes | quote }}
+  {{- if .Values.sso.masterPasswordPolicy }}
+  SSO_MASTER_PASSWORD_POLICY: {{ .Values.sso.masterPasswordPolicy | quote }}

@@ -182,3 +182,21 @@ startupProbe:
   failureThreshold: 30
 
 tolerations: []
+
+sso:
+  # Activer l'authentification SSO
+  enabled: false
+  # Forcer l'utilisation exclusive du SSO (désactive l'authentification par mot de passe)
+  onlySSO: false
+  # URL de découverte OpenID Connect (ex: https://idp.example.com/.well-known/openid-configuration)
+  authority: ""
+  # Client ID de l'application
+  clientId: ""
+  # Client secret (sensible)
+  clientSecret: ""
+  # Activer PKCE (Proof Key for Code Exchange)
+  pkce: true
+  # Scopes demandés
+  scopes: "email profile"
+  # Politique de mot de passe maître (JSON, laisser vide pour désactiver)
+  masterPasswordPolicy: ""
