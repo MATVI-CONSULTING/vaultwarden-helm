@@ -68,8 +68,12 @@ secrets:
 persistence:
   enabled: true
   size: 1Gi
-  # Laisser vide pour utiliser la StorageClass par défaut du cluster
-  storageClass: ""
+  # StorageClass à utiliser pour le PVC
+  # Infomaniak IKS : csi-cinder-sc-retain (données préservées) | csi-cinder-sc-delete
+  # AWS EKS        : gp3
+  # GKE            : standard
+  # AKS            : managed-csi
+  storageClass: "csi-cinder-sc-retain"
   accessMode: ReadWriteOnce
 
 service:

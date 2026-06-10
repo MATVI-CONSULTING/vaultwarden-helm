@@ -33,7 +33,7 @@ Copy `values.yaml` and adjust the values for your target environment.
 | `smtp.security` | SMTP security (`starttls` / `force_tls` / `off`) | `starttls` |
 | `persistence.enabled` | Enable persistent storage | `true` |
 | `persistence.size` | PVC size | `1Gi` |
-| `persistence.storageClass` | StorageClass name (empty = cluster default) | `""` |
+| `persistence.storageClass` | StorageClass name | `csi-cinder-sc-retain` |
 | `persistence.accessMode` | PVC access mode | `ReadWriteOnce` |
 | `ingress.enabled` | Enable Ingress | `true` |
 | `ingress.host` | Ingress hostname | `vaultwarden.example.com` |
