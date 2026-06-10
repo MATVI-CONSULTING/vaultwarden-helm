@@ -8,6 +8,12 @@ data:
   DOMAIN: {{ .Values.config.domain | quote }}
   SIGNUPS_ALLOWED: {{ .Values.config.signupsAllowed | quote }}
   SHOW_PASSWORD_HINT: {{ .Values.config.showPasswordHint | quote }}
+  WEB_VAULT_ENABLED: {{ .Values.config.webVaultEnabled | quote }}
+  SENDS_ALLOWED: {{ .Values.config.sendsAllowed | quote }}
+  EMERGENCY_ACCESS_ALLOWED: {{ .Values.config.emergencyAccessAllowed | quote }}
+  ORG_CREATION_USERS: {{ .Values.config.orgCreationUsers | quote }}
+  ORG_GROUPS_ENABLED: {{ .Values.config.orgGroupsEnabled | quote }}
+  ORG_EVENTS_ENABLED: {{ .Values.config.orgEventsEnabled | quote }}
   SMTP_HOST: {{ .Values.smtp.host | quote }}
   SMTP_FROM: {{ .Values.smtp.from | quote }}
   SMTP_FROM_NAME: {{ .Values.smtp.fromName | quote }}

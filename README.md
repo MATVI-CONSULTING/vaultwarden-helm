@@ -105,6 +105,31 @@ kubectl get pods -l app.kubernetes.io/name=vaultwarden
 kubectl logs -l app.kubernetes.io/name=vaultwarden -f
 ```
 
+## Feature Flags
+
+Control which Vaultwarden features are enabled or disabled.
+
+| Parameter | Description | Default |
+| --- | --- | --- |
+| `config.webVaultEnabled` | Enable the web vault UI | `true` |
+| `config.sendsAllowed` | Allow users to create Sends (file/text sharing) | `true` |
+| `config.emergencyAccessAllowed` | Allow emergency access feature | `true` |
+| `config.orgCreationUsers` | Who can create organizations (`all` \| `admin` \| `none`) | `all` |
+| `config.orgGroupsEnabled` | Enable organization groups (beta) | `false` |
+| `config.orgEventsEnabled` | Enable organization event logging | `false` |
+
+### Hardened configuration example
+
+```yaml
+config:
+  webVaultEnabled: "true"
+  sendsAllowed: "false"
+  emergencyAccessAllowed: "false"
+  orgCreationUsers: "admin"
+  orgGroupsEnabled: "false"
+  orgEventsEnabled: "true"
+```
+
 ## Sources
 
 - Official project: [github.com/dani-garcia/vaultwarden](https://github.com/dani-garcia/vaultwarden)
