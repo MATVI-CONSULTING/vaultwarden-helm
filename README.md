@@ -233,6 +233,31 @@ duo:
   secretKey: "your-duo-secret"
   hostname: "api-XXXXXXXX.duosecurity.com"
 ```
+
+## Advanced SMTP Options
+
+In addition to the basic SMTP parameters, the following advanced options are available:
+
+| Parameter | Description | Default |
+| --- | --- | --- |
+| `smtp.authMechanism` | Authentication mechanism (`Plain` \| `Login` \| `Xoauth2`) | `Plain` |
+| `smtp.acceptInvalidHostnames` | Accept invalid hostnames in certificates | `false` |
+| `smtp.acceptInvalidCerts` | Accept invalid SSL/TLS certificates | `false` |
+| `smtp.debug` | Enable SMTP debug logging | `false` |
+
+> **Warning:** `acceptInvalidHostnames` and `acceptInvalidCerts` should only be used in development/testing environments. Never enable these in production.
+
+### Example: Office 365 with Login mechanism
+
+```yaml
+smtp:
+  host: "smtp.office365.com"
+  port: "587"
+  security: "starttls"
+  from: "vaultwarden@yourdomain.com"
+  username: "vaultwarden@yourdomain.com"
+  authMechanism: "Login"
+```
 ## Sources
 
 - Official project: [github.com/dani-garcia/vaultwarden](https://github.com/dani-garcia/vaultwarden)

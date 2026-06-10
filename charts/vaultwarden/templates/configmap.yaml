@@ -48,3 +48,7 @@ data:
   DUO_IKEY: {{ .Values.duo.iKey | quote }}
   {{- if .Values.duo.hostname }}
   DUO_HOST: {{ .Values.duo.hostname | quote }}
+  SMTP_AUTH_MECHANISM: {{ .Values.smtp.authMechanism | quote }}
+  SMTP_ACCEPT_INVALID_HOSTNAMES: {{ .Values.smtp.acceptInvalidHostnames | quote }}
+  SMTP_ACCEPT_INVALID_CERTS: {{ .Values.smtp.acceptInvalidCerts | quote }}
+  SMTP_DEBUG: {{ .Values.smtp.debug | quote }}
