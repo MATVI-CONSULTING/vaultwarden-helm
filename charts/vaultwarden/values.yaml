@@ -211,3 +211,15 @@ pushNotifications:
   relayUri: ""
   # URI d'identité (laisser vide pour utiliser l'identité Bitwarden par défaut)
   identityUri: ""
+
+database:
+  # sqlite | mysql | postgresql
+  type: "sqlite"
+  host: ""
+  port: ""
+  name: "vaultwarden"
+  username: ""
+  password: ""
+  # Si renseigné, remplace la construction automatique de l'URL
+  # Exemple : "postgresql://user:password@host:5432/vaultwarden"
+  uri: ""
