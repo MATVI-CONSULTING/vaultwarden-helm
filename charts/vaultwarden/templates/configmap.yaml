@@ -20,3 +20,15 @@ data:
   SMTP_SECURITY: {{ .Values.smtp.security | quote }}
   SMTP_PORT: {{ .Values.smtp.port | quote }}
   SMTP_USERNAME: {{ .Values.smtp.username | quote }}
+  {{- if .Values.storage.orgAttachmentLimit }}
+  ORG_ATTACHMENT_LIMIT: {{ .Values.storage.orgAttachmentLimit | quote }}
+  {{- end }}
+  {{- if .Values.storage.userAttachmentLimit }}
+  USER_ATTACHMENT_LIMIT: {{ .Values.storage.userAttachmentLimit | quote }}
+  {{- end }}
+  {{- if .Values.storage.sendStorageLimit }}
+  SEND_STORAGE_LIMIT: {{ .Values.storage.sendStorageLimit | quote }}
+  {{- end }}
+  {{- if .Values.storage.trashAutoDeletion }}
+  TRASH_AUTO_DELETE_DAYS: {{ .Values.storage.trashAutoDeletion | quote }}
+  {{- end }}

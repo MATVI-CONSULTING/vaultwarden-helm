@@ -159,6 +159,26 @@ When `websocket.enabled: true`, the following are automatically added:
 - `nginx.ingress.kubernetes.io/proxy-read-timeout: "3600"`
 - `nginx.ingress.kubernetes.io/proxy-send-timeout: "3600"`
 
+## Storage Quotas
+
+Limit attachment storage per user and per organization, and configure automatic trash deletion.
+
+| Parameter | Description | Default |
+| --- | --- | --- |
+| `storage.orgAttachmentLimit` | Organization attachment storage limit (KB, empty = unlimited) | `""` |
+| `storage.userAttachmentLimit` | Per-user attachment storage limit (KB, empty = unlimited) | `""` |
+| `storage.sendStorageLimit` | Per-user Sends storage limit (KB, empty = unlimited) | `""` |
+| `storage.trashAutoDeletion` | Days before trash items are permanently deleted (empty = disabled) | `""` |
+
+### Example: 1 GB per user, 5 GB per org, 30-day trash
+
+```yaml
+storage:
+  orgAttachmentLimit: "5120000"   # 5 GB in KB
+  userAttachmentLimit: "1024000"  # 1 GB in KB
+  sendStorageLimit: "524288"      # 512 MB in KB
+  trashAutoDeletion: "30"
+```
 ## Sources
 
 - Official project: [github.com/dani-garcia/vaultwarden](https://github.com/dani-garcia/vaultwarden)
