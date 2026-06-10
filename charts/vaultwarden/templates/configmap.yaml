@@ -28,6 +28,10 @@ data:
   SMTP_SECURITY: {{ .Values.smtp.security | quote }}
   SMTP_PORT: {{ .Values.smtp.port | quote }}
   SMTP_USERNAME: {{ .Values.smtp.username | quote }}
+  SMTP_AUTH_MECHANISM: {{ .Values.smtp.authMechanism | quote }}
+  SMTP_ACCEPT_INVALID_HOSTNAMES: {{ .Values.smtp.acceptInvalidHostnames | quote }}
+  SMTP_ACCEPT_INVALID_CERTS: {{ .Values.smtp.acceptInvalidCerts | quote }}
+  SMTP_DEBUG: {{ .Values.smtp.debug | quote }}
   {{- if .Values.storage.orgAttachmentLimit }}
   ORG_ATTACHMENT_LIMIT: {{ .Values.storage.orgAttachmentLimit | quote }}
   {{- end }}
@@ -42,24 +46,28 @@ data:
   {{- end }}
   {{- if .Values.jobs.emergencyNotificationReminder }}
   EMERGENCY_NOTIFICATION_REMINDER_SCHEDULE: {{ .Values.jobs.emergencyNotificationReminder | quote }}
+  {{- end }}
   {{- if .Values.jobs.emergencyAccessRequestTimeout }}
   EMERGENCY_REQUEST_TIMEOUT_SCHEDULE: {{ .Values.jobs.emergencyAccessRequestTimeout | quote }}
+  {{- end }}
   {{- if .Values.jobs.eventCleanup }}
   EVENT_CLEANUP_SCHEDULE: {{ .Values.jobs.eventCleanup | quote }}
+  {{- end }}
   {{- if .Values.jobs.eventRetentionDays }}
   EVENTS_DAYS_RETAIN: {{ .Values.jobs.eventRetentionDays | quote }}
+  {{- end }}
   {{- if .Values.yubikey.clientId }}
   YUBICO_CLIENT_ID: {{ .Values.yubikey.clientId | quote }}
+  {{- end }}
   {{- if .Values.yubikey.server }}
   YUBICO_SERVER: {{ .Values.yubikey.server | quote }}
+  {{- end }}
   {{- if .Values.duo.iKey }}
   DUO_IKEY: {{ .Values.duo.iKey | quote }}
+  {{- end }}
   {{- if .Values.duo.hostname }}
   DUO_HOST: {{ .Values.duo.hostname | quote }}
-  SMTP_AUTH_MECHANISM: {{ .Values.smtp.authMechanism | quote }}
-  SMTP_ACCEPT_INVALID_HOSTNAMES: {{ .Values.smtp.acceptInvalidHostnames | quote }}
-  SMTP_ACCEPT_INVALID_CERTS: {{ .Values.smtp.acceptInvalidCerts | quote }}
-  SMTP_DEBUG: {{ .Values.smtp.debug | quote }}
+  {{- end }}
   {{- if .Values.sso.enabled }}
   SSO_ENABLED: {{ .Values.sso.enabled | toString | quote }}
   SSO_ONLY: {{ .Values.sso.onlySSO | toString | quote }}
@@ -69,12 +77,17 @@ data:
   SSO_SCOPES: {{ .Values.sso.scopes | quote }}
   {{- if .Values.sso.masterPasswordPolicy }}
   SSO_MASTER_PASSWORD_POLICY: {{ .Values.sso.masterPasswordPolicy | quote }}
+  {{- end }}
+  {{- end }}
   {{- if .Values.pushNotifications.enabled }}
   PUSH_ENABLED: "true"
   {{- if .Values.pushNotifications.relayUri }}
   PUSH_RELAY_URI: {{ .Values.pushNotifications.relayUri | quote }}
+  {{- end }}
   {{- if .Values.pushNotifications.identityUri }}
   PUSH_IDENTITY_URI: {{ .Values.pushNotifications.identityUri | quote }}
+  {{- end }}
+  {{- end }}
   ICON_SERVICE: {{ .Values.icons.service | quote }}
   ICON_REDIRECT_CODE: {{ .Values.icons.redirectCode | quote }}
   DISABLE_ICON_DOWNLOAD: {{ .Values.icons.disableLocalNetworkAccess | quote }}
@@ -84,3 +97,4 @@ data:
   EXTENDED_LOGGING: {{ .Values.logging.timestamps | quote }}
   {{- if .Values.logging.file }}
   LOG_FILE: {{ .Values.logging.file | quote }}
+  {{- end }}
