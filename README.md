@@ -445,6 +445,61 @@ database:
   type: postgresql
   uri: "postgresql://user:pass@host:5432/vaultwarden?sslmode=require"
 ```
+
+## HIBP Integration
+
+[Have I Been Pwned](https://haveibeenpwned.com) integration allows Vaultwarden to check passwords against known data breach databases.
+
+| Parameter | Description | Default |
+| --- | --- | --- |
+| `hibp.apiKey` | HIBP API key (stored in Secret) | `""` |
+
+Get your API key at [haveibeenpwned.com/API/Key](https://haveibeenpwned.com/API/Key).
+
+```yaml
+hibp:
+  apiKey: "your-hibp-api-key"
+```
+
+## Icon Service
+
+Configure how Vaultwarden fetches favicons for vault entries.
+
+| Parameter | Description | Default |
+| --- | --- | --- |
+| `icons.service` | Icon source (`internal` \| `bitwarden` \| `duckduckgo` \| `google` \| custom URL) | `internal` |
+| `icons.redirectCode` | HTTP redirect code (`301` \| `302`) | `302` |
+| `icons.disableLocalNetworkAccess` | Block icon fetches from private/local IPs | `false` |
+
+### Privacy-focused configuration
+
+```yaml
+icons:
+  service: "internal"
+  disableLocalNetworkAccess: "true"
+```
+
+## Administration
+
+| Parameter | Description | Default |
+| --- | --- | --- |
+| `admin.rateLimitSeconds` | Admin panel rate limit window (seconds) | `300` |
+| `admin.rateLimitMaxBurst` | Max failed login attempts in the window | `3` |
+
+## Logging
+
+| Parameter | Description | Default |
+| --- | --- | --- |
+| `logging.level` | Log verbosity (`trace` \| `debug` \| `info` \| `warn` \| `error`) | `info` |
+| `logging.file` | Path to log file (empty = stdout only) | `""` |
+| `logging.timestamps` | Enable extended logging with timestamps | `false` |
+
+```yaml
+logging:
+  level: "warn"
+  file: "/data/vaultwarden.log"
+  timestamps: "true"
+```
 ## Sources
 
 - Official project: [github.com/dani-garcia/vaultwarden](https://github.com/dani-garcia/vaultwarden)
