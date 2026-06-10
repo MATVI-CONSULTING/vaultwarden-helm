@@ -16,6 +16,14 @@ config:
   # Désactiver après création du premier compte admin
   signupsAllowed: "false"
   showPasswordHint: "false"
+  # Feature flags
+  webVaultEnabled: "true"
+  sendsAllowed: "true"
+  emergencyAccessAllowed: "true"
+  # Qui peut créer des organisations : all | admin | none
+  orgCreationUsers: "all"
+  orgGroupsEnabled: "false"
+  orgEventsEnabled: "false"
 
 # Configuration SMTP (variables non-sensibles)
 smtp:
