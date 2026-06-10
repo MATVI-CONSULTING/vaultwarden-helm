@@ -106,3 +106,21 @@ jobs:
   eventCleanup: ""
   # Rétention des événements en jours (laisser vide = illimité)
   eventRetentionDays: ""
+
+duo:
+  # Integration key (iKey)
+  iKey: ""
+  # Secret key (sensible)
+  secretKey: ""
+  # API hostname (ex: api-XXXXXXXX.duosecurity.com)
+  hostname: ""
+
+yubikey:
+  # Client ID de l'API Yubico
+  clientId: ""
+  # Clé secrète Yubico (sensible)
+  secretKey: ""
+  # Serveur de validation personnalisé (laisser vide pour utiliser api.yubico.com)
+  server: ""
+
+# Authentification Duo Security (https://duo.com)

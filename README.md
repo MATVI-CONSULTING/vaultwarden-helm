@@ -200,6 +200,39 @@ jobs:
   eventCleanup: "0 2 * * 0"                     # weekly on Sunday at 2am
   eventRetentionDays: "90"
 ```
+
+## Multi-Factor Authentication
+
+### YubiKey
+
+Hardware token 2FA via Yubico's validation API. Requires a free API key from [upgrade.yubico.com/getapikey](https://upgrade.yubico.com/getapikey/).
+
+| Parameter | Description | Default |
+| --- | --- | --- |
+| `yubikey.clientId` | Yubico API client ID | `""` |
+| `yubikey.secretKey` | Yubico API secret key (stored in Secret) | `""` |
+| `yubikey.server` | Custom validation server URL (empty = api.yubico.com) | `""` |
+
+```yaml
+yubikey:
+  clientId: "12345"
+  secretKey: "your-yubico-secret"
+```
+
+### Duo Security
+
+| Parameter | Description | Default |
+| --- | --- | --- |
+| `duo.iKey` | Duo integration key | `""` |
+| `duo.secretKey` | Duo secret key (stored in Secret) | `""` |
+| `duo.hostname` | Duo API hostname (e.g. `api-XXXXXXXX.duosecurity.com`) | `""` |
+
+```yaml
+duo:
+  iKey: "DIXXXXXXXXXXXXXXXXXX"
+  secretKey: "your-duo-secret"
+  hostname: "api-XXXXXXXX.duosecurity.com"
+```
 ## Sources
 
 - Official project: [github.com/dani-garcia/vaultwarden](https://github.com/dani-garcia/vaultwarden)
