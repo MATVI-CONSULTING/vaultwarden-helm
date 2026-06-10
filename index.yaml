@@ -3,6 +3,16 @@ entries:
   vaultwarden:
   - apiVersion: v2
     appVersion: 1.36.0
+    created: "2026-06-10T19:09:51.387097641Z"
+    description: Helm chart for self-hosted Vaultwarden deployment on Kubernetes
+    digest: 5f71964fd27dd13c780f83197d788aef4107f9cab8d7cdac47ada90600f5d492
+    name: vaultwarden
+    type: application
+    urls:
+    - vaultwarden-0.1.1.tgz
+    version: 0.1.1
+  - apiVersion: v2
+    appVersion: 1.36.0
     created: "2026-06-10T18:53:13.245492655Z"
     description: Helm chart for self-hosted Vaultwarden deployment on Kubernetes
     digest: 75e215c0d78606c7eba57cbe212760d5b8d6aeab09759b63b4a53f534396ec75
@@ -31,4 +41,4 @@ entries:
     urls:
     - vaultwarden-0.0.1.tgz
     version: 0.0.1
-generated: "2026-06-10T18:53:13.245503315Z"
+generated: "2026-06-10T19:09:51.387117228Z"
