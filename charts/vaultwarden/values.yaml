@@ -132,3 +132,40 @@ yubikey:
   server: ""
 
 # Authentification Duo Security (https://duo.com)
+
+affinity: {}
+
+# Pod metadata
+
+containerSecurityContext: {}
+
+# Image pull secrets for private registries
+
+extraEnvVars: []
+
+# Startup probe (useful for slow cluster startup)
+
+imagePullSecrets: []
+
+# Extra environment variables injected into the container
+# - name: MY_VAR
+#   value: "my-value"
+
+nodeSelector: {}
+
+podAnnotations: {}
+
+podLabels: {}
+
+# Security contexts
+
+securityContext: {}
+
+startupProbe:
+  enabled: false
+  initialDelaySeconds: 10
+  periodSeconds: 10
+  timeoutSeconds: 5
+  failureThreshold: 30
+
+tolerations: []

@@ -258,6 +258,77 @@ smtp:
   username: "vaultwarden@yourdomain.com"
   authMechanism: "Login"
 ```
+
+## Advanced Pod Configuration
+
+### Node selector, tolerations and affinity
+
+```yaml
+nodeSelector:
+  kubernetes.io/os: linux
+
+tolerations:
+  - key: "dedicated"
+    operator: "Equal"
+    value: "vaultwarden"
+    effect: "NoSchedule"
+
+affinity:
+  podAntiAffinity:
+    preferredDuringSchedulingIgnoredDuringExecution:
+      - weight: 100
+        podAffinityTerm:
+          topologyKey: kubernetes.io/hostname
+          labelSelector:
+            matchLabels:
+              app.kubernetes.io/name: vaultwarden
+```
+
+### Security contexts
+
+```yaml
+securityContext:
+  runAsNonRoot: true
+  runAsUser: 1000
+  fsGroup: 1000
+
+containerSecurityContext:
+  allowPrivilegeEscalation: false
+  capabilities:
+    drop:
+      - ALL
+  readOnlyRootFilesystem: false
+```
+
+### Extra environment variables
+
+```yaml
+extraEnvVars:
+  - name: ROCKET_WORKERS
+    value: "10"
+  - name: WEB_VAULT_FOLDER
+    value: "/web-vault/"
+```
+
+### Startup probe
+
+Enable the startup probe for slower cluster environments where the container takes time to initialize:
+
+```yaml
+startupProbe:
+  enabled: true
+  initialDelaySeconds: 10
+  periodSeconds: 10
+  timeoutSeconds: 5
+  failureThreshold: 30
+```
+
+### Image pull secrets
+
+```yaml
+imagePullSecrets:
+  - name: my-registry-secret
+```
 ## Sources
 
 - Official project: [github.com/dani-garcia/vaultwarden](https://github.com/dani-garcia/vaultwarden)
