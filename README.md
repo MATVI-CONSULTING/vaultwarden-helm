@@ -39,20 +39,29 @@ Copy `values.yaml` and adjust the values for your target environment.
 
 ### Admin token (Argon2)
 
-Generate the Argon2 hash before deploying:
+The Argon2 hash must be generated **locally before deploying to the cluster**. Docker is required on your local machine — this step does not run on the cluster.
+
+Run the following command, which will interactively prompt you for a password:
 
 ```bash
 docker run --rm -it vaultwarden/server /vaultwarden hash --preset owasp
 ```
 
-Paste the generated hash into `values.yaml`:
+```text
+Password:           ← type your chosen admin password (hidden)
+Confirm Password:   ← confirm it
+
+ADMIN_TOKEN='$argon2id$v=19$m=19456,t=2,p=1$...'
+```
+
+Copy the generated `ADMIN_TOKEN` value and paste it into `values.yaml`:
 
 ```yaml
 secrets:
   adminToken: "$argon2id$v=19$m=19456,t=2,p=1$..."
 ```
 
-> At `/admin`, enter the **password** you chose during generation, not the hash itself.
+> At `/admin`, enter the **password** you typed during generation — not the hash. The hash is only stored server-side for verification.
 
 ### Ingress with TLS (cert-manager)
 
