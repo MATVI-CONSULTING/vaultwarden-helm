@@ -200,3 +200,14 @@ sso:
   scopes: "email profile"
   # Politique de mot de passe maître (JSON, laisser vide pour désactiver)
   masterPasswordPolicy: ""
+
+pushNotifications:
+  enabled: false
+  # ID d'installation obtenu sur bitwarden.com/host
+  installationId: ""
+  # Clé d'installation (sensible)
+  installationKey: ""
+  # URI du relay (laisser vide pour utiliser le relay Bitwarden par défaut)
+  relayUri: ""
+  # URI d'identité (laisser vide pour utiliser l'identité Bitwarden par défaut)
+  identityUri: ""

@@ -382,6 +382,33 @@ sso:
 ```
 
 > **Note:** SSO in Vaultwarden requires the SSO patch (available in the official `vaultwarden/server` image). Consult the [Vaultwarden SSO wiki](https://github.com/dani-garcia/vaultwarden/wiki) for setup details.
+
+## Push Notifications
+
+Enable mobile push notifications to sync vaults in real-time on iOS and Android clients. Requires a free Bitwarden.com account to obtain installation credentials.
+
+| Parameter | Description | Default |
+| --- | --- | --- |
+| `pushNotifications.enabled` | Enable push notifications | `false` |
+| `pushNotifications.installationId` | Bitwarden installation ID (stored in Secret) | `""` |
+| `pushNotifications.installationKey` | Bitwarden installation key (stored in Secret) | `""` |
+| `pushNotifications.relayUri` | Custom relay URI (empty = Bitwarden default) | `""` |
+| `pushNotifications.identityUri` | Custom identity URI (empty = Bitwarden default) | `""` |
+
+### Setup
+
+1. Create a Bitwarden account at [bitwarden.com](https://bitwarden.com)
+2. Go to [bitwarden.com/host](https://bitwarden.com/host) to generate credentials
+3. Add the credentials to your `values.yaml`:
+
+```yaml
+pushNotifications:
+  enabled: true
+  installationId: "your-installation-id"
+  installationKey: "your-installation-key"
+```
+
+The `installationId` and `installationKey` are stored in the Kubernetes Secret.
 ## Sources
 
 - Official project: [github.com/dani-garcia/vaultwarden](https://github.com/dani-garcia/vaultwarden)
