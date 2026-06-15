@@ -28,7 +28,7 @@ config:
   # Exemple : "example.com,mycompany.org"
   signupDomains: ""
   # Exiger une vérification de l'adresse email lors de l'inscription
-  signupsVerify: "false"
+  signupsVerify: "true"
   # Autoriser les utilisateurs à changer leur adresse email
   emailChangeAllowed: "true"
   # Nom de l'organisation dans les emails d'invitation
