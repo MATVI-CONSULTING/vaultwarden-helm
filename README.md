@@ -157,6 +157,7 @@ ingress:
 ```
 
 When `websocket.enabled: true`, the following are automatically added:
+
 - An explicit path rule for `/notifications/hub`
 - `nginx.ingress.kubernetes.io/proxy-read-timeout: "3600"`
 - `nginx.ingress.kubernetes.io/proxy-send-timeout: "3600"`

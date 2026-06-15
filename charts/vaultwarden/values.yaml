@@ -23,7 +23,7 @@ config:
   # Qui peut créer des organisations : all | admin | none
   orgCreationUsers: "all"
   orgGroupsEnabled: "false"
-  orgEventsEnabled: "false"
+  orgEventsEnabled: "true"
   # Restreindre les inscriptions à des domaines email spécifiques (séparés par des virgules)
   # Exemple : "example.com,mycompany.org"
   signupDomains: ""
