@@ -15,7 +15,7 @@ config:
   domain: "https://vaultwarden.example.com"
   # Désactiver après création du premier compte admin
   signupsAllowed: "false"
-  showPasswordHint: "false"
+  showPasswordHint: "true"
   # Feature flags
   webVaultEnabled: "true"
   sendsAllowed: "true"
