@@ -1,0 +1,71 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+env:
+  CHART: charts/vaultwarden
+
+jobs:
+  lint-template:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Install Helm
+        uses: azure/setup-helm@v5
+        with:
+          version: v3.16.2
+
+      - name: Helm lint
+        run: helm lint "$CHART"
+
+      # Dependabot bumpe image.tag sans toucher appVersion : sans ce garde-fou,
+      # le chart publie annonce une version de Vaultwarden qui n'est pas celle deployee.
+      - name: appVersion et image.tag concordent
+        run: |
+          set -euo pipefail
+          app=$(sed -n 's/^appVersion: *"\{0,1\}\([^"]*\)"\{0,1\}$/\1/p' "$CHART/Chart.yaml")
+          tag=$(sed -n '/^image:/,/^[^ ]/s/^  tag: *"\{0,1\}\([^"]*\)"\{0,1\}$/\1/p' "$CHART/values.yaml")
+          if [ "$app" != "$tag" ]; then
+            echo "::error::appVersion ($app) != image.tag ($tag) : alignez Chart.yaml" >&2
+            exit 1
+          fi
+
+      - name: Helm template (toutes les variantes)
+        run: |
+          set -euo pipefail
+          mkdir -p rendered
+          helm template vw "$CHART" > rendered/default.yaml
+          # Ingress TLS + WebSocket, base PostgreSQL externe.
+          helm template vw "$CHART" \
+            --set ingress.className=nginx \
+            --set ingress.tls.enabled=true \
+            --set ingress.websocket.enabled=true \
+            --set database.type=postgresql \
+            --set database.host=db \
+            --set database.port=5432 \
+            --set database.username=vw \
+            --set database.password=ci > rendered/full.yaml
+          # Sans persistance ni Ingress.
+          helm template vw "$CHART" \
+            --set persistence.enabled=false \
+            --set ingress.enabled=false > rendered/minimal.yaml
+
+      - name: Install kubeconform
+        env:
+          KUBECONFORM_VERSION: v0.8.0
+          KUBECONFORM_SHA256: 9bc2bffbf71f261128533edaf912153948b7ff238f9a531ae6d34466ec287883
+        run: |
+          set -euo pipefail
+          curl -sSLo kubeconform.tar.gz \
+            "https://github.com/yannh/kubeconform/releases/download/${KUBECONFORM_VERSION}/kubeconform-linux-amd64.tar.gz"
+          echo "${KUBECONFORM_SHA256}  kubeconform.tar.gz" | sha256sum -c -
+          tar xzf kubeconform.tar.gz -C "$RUNNER_TEMP" kubeconform
+          echo "$RUNNER_TEMP" >> "$GITHUB_PATH"
+
+      - name: Valider les manifestes (kubeconform)
+        run: kubeconform -strict -summary -kubernetes-version 1.29.0 rendered/*.yaml
