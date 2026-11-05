@@ -567,6 +567,15 @@ Common causes:
 | Two StorageClasses marked as default | Conflicting defaults (Kubernetes picks unpredictably) | Remove the `is-default-class` annotation from the wrong one: `kubectl patch storageclass gp3 -p '{"metadata":{"annotations":{"storageclass.kubernetes.io/is-default-class":"false"}}}'` |
 | `no persistent volumes available` | No provisioner running | Check `kubectl get pods -A \| grep csi` |
 
+## Release
+
+1. Bump `version` in `charts/vaultwarden/Chart.yaml` and merge to `main`.
+2. Run `./release.sh`: it asks for the version and triggers the `Release` workflow on the latest commit of `main`
+   (same as `gh workflow run release.yml -f version=X.Y.Z -f commit=<sha>`).
+3. The workflow checks the version against `Chart.yaml`, creates the `vX.Y.Z` tag and GitHub release, then publishes the chart to `gh-pages`.
+
+Do not create tags or releases by hand.
+
 ## Sources
 
 - Official project: [github.com/dani-garcia/vaultwarden](https://github.com/dani-garcia/vaultwarden)
