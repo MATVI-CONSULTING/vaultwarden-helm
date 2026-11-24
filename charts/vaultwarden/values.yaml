@@ -9,6 +9,12 @@ image:
 
 replicaCount: 1
 
+# Stratégie de déploiement. Vide : Recreate si la persistance est en
+# ReadWriteOnce/ReadWriteOncePod (un seul pod peut monter le volume),
+# sinon défaut Kubernetes (RollingUpdate). Une valeur ici remplace ce choix.
+# Exemple : { type: RollingUpdate, rollingUpdate: { maxUnavailable: 1, maxSurge: 0 } }
+strategy: {}
+
 # Configuration générale de Vaultwarden (variables non-sensibles)
 config:
   # URL publique de l'instance — doit correspondre à l'hôte Ingress

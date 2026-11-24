@@ -35,6 +35,7 @@ Copy `values.yaml` and adjust the values for your target environment.
 | `persistence.size` | PVC size | `1Gi` |
 | `persistence.storageClass` | StorageClass name | `csi-cinder-sc-retain` |
 | `persistence.accessMode` | PVC access mode | `ReadWriteOnce` |
+| `strategy` | Deployment strategy. Empty: `Recreate` when persistence is `ReadWriteOnce`/`ReadWriteOncePod`, Kubernetes default otherwise | `{}` |
 | `ingress.enabled` | Enable Ingress | `true` |
 | `ingress.host` | Ingress hostname | `vaultwarden.example.com` |
 | `ingress.tls.enabled` | Enable TLS | `false` |
@@ -514,6 +515,9 @@ Vaultwarden stores all data (SQLite database, attachments, config) under `/data`
 | `persistence.size` | Volume size | `1Gi` |
 | `persistence.storageClass` | StorageClass name. Empty string = cluster default | `""` |
 | `persistence.accessMode` | PVC access mode | `ReadWriteOnce` |
+| `strategy` | Deployment strategy (see below) | `{}` |
+
+With a `ReadWriteOnce` volume only one pod can mount `/data`: a rolling update would leave the new pod stuck on `Multi-Attach error`. The chart therefore uses `strategy.type: Recreate` by default when persistence is enabled with `ReadWriteOnce` or `ReadWriteOncePod` (short downtime during upgrades). Set `strategy` explicitly to override.
 
 > **Always set `storageClass` explicitly** in production to avoid relying on cluster defaults, which can change or conflict (see warning below).
 

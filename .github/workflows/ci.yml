@@ -55,6 +55,18 @@ jobs:
             --set persistence.enabled=false \
             --set ingress.enabled=false > rendered/minimal.yaml
 
+      - name: Stratégie de déploiement
+        run: |
+          set -euo pipefail
+          sel='select(.kind == "Deployment") | .spec.strategy.type // "none"'
+          check() { got=$(yq "$sel" "$1"); [ "$got" = "$2" ] || { echo "::error::$1 : strategy=$got, attendu $2" >&2; exit 1; }; }
+          check rendered/default.yaml Recreate
+          check rendered/minimal.yaml none
+          helm template vw "$CHART" --set persistence.accessMode=ReadWriteMany > rendered/rwx.yaml
+          check rendered/rwx.yaml none
+          helm template vw "$CHART" --set strategy.type=RollingUpdate > rendered/override.yaml
+          check rendered/override.yaml RollingUpdate
+
       - name: Install kubeconform
         env:
           KUBECONFORM_VERSION: v0.8.0
