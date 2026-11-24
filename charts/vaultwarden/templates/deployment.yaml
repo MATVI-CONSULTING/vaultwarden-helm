@@ -6,6 +6,15 @@ metadata:
     {{- include "chart.labels" . | nindent 4 }}
 spec:
   replicas: {{ .Values.replicaCount }}
+  {{- if .Values.strategy }}
+  strategy:
+    {{- toYaml .Values.strategy | nindent 4 }}
+  {{- else if and .Values.persistence.enabled (has .Values.persistence.accessMode (list "ReadWriteOnce" "ReadWriteOncePod")) }}
+  # Volume RWO : le nouveau pod ne peut pas monter le volume tant que l'ancien
+  # tourne (Multi-Attach). Recreate arrête l'ancien pod avant de lancer le nouveau.
+  strategy:
+    type: Recreate
+  {{- end }}
   selector:
     matchLabels:
       {{- include "chart.selectorLabels" . | nindent 6 }}
